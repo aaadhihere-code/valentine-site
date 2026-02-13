@@ -151,6 +151,10 @@ const questions = [
 ];
 
 function nextQuestion(){
+    // 🎵 Start music on first click
+    if(step === 0){
+        document.getElementById("bgMusic").play();
+    }
     if(step < questions.length-1){
         step++;
         document.getElementById("question").innerHTML = questions[step];
@@ -208,3 +212,4 @@ setTimeout(startSlideshow, 5000);
 
 </body>
 </html>
+

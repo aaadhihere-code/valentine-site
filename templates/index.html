@@ -1,129 +1,209 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jemimma 💖</title>
+<meta charset="UTF-8">
+<title>For My Cutie 💖</title>
 
-    <style>
-        body {
-            margin: 0;
-            text-align: center;
-            font-family: 'Comic Sans MS', cursive;
-            overflow: hidden;
-            color: white;
-            background: url("/static/photo.jpg") no-repeat center center/cover;
-        }
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        .overlay {
-            background: rgba(0,0,0,0.5);
-            height: 100vh;
-            width: 100%;
-            position: absolute;
-            top: 0;
-        }
+<style>
+body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    text-align:center;
+    background: linear-gradient(135deg,#ffd6ec,#ffe9f5,#fff5fa);
+    overflow-x:hidden;
+}
 
-        .content {
-            position: relative;
-            z-index: 2;
-            padding-top: 120px;
-        }
+h2 {
+    margin-top:30px;
+    color:#ff4d88;
+}
 
-        h1 {
-            font-size: 45px;
-        }
+button {
+    padding:12px 25px;
+    margin:15px;
+    font-size:16px;
+    border:none;
+    border-radius:20px;
+    background:#ff80ab;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
 
-        button {
-            padding: 15px 35px;
-            font-size: 20px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            margin: 20px;
-        }
+button:hover {
+    transform:scale(1.1);
+}
 
-        #yesBtn {
-            background-color: #ff1493;
-            color: white;
-        }
+.gallery {
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+    padding:20px;
+}
 
-        #noBtn {
-            background-color: #444;
-            color: white;
-            position: absolute;
-        }
+.gallery img {
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:15px;
+}
 
-        #loveMessage {
-            display: none;
-            font-size: 28px;
-            margin-top: 30px;
-            animation: pop 1s ease;
-        }
+#finalMessage {
+    display:none;
+    padding:30px;
+    font-size:18px;
+    color:#d63384;
+    animation: fadeIn 2s ease-in-out;
+}
 
-        @keyframes pop {
-            0% {transform: scale(0);}
-            100% {transform: scale(1);}
-        }
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
 
-        canvas {
-            position: fixed;
-            pointer-events: none;
-        }
-    </style>
+/* Floating hearts */
+.heart {
+    position:fixed;
+    bottom:-10px;
+    color:#ff80ab;
+    animation: float 6s linear infinite;
+    font-size:20px;
+}
+
+@keyframes float {
+    0% {transform:translateY(0);}
+    100% {transform:translateY(-100vh);}
+}
+</style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
+<h2 id="question">Hi cutiepieee… can I ask you something? 🙂‍↕️💗</h2>
 
-<div class="content">
-    <h1>Jemimma 🐻💖</h1>
-    <h2>Will you be my Valentine? 🥺💘</h2>
+<div id="collage" class="gallery">
+    <img src="/static/pic1.jpg">
+    <img src="/static/pic2.jpg">
+    <img src="/static/pic3.jpg">
+    <img src="/static/pic4.jpg">
+    <img src="/static/pic5.jpg">
+    <img src="/static/pic6.jpg">
+    <img src="/static/pic7.jpg">
+    <img src="/static/pic8.jpg">
+    <img src="/static/pic9.jpg">
+    <img src="/static/pic10.jpg">
+    <img src="/static/pic11.jpg">
+    <img src="/static/pic12.jpg">
+    <img src="/static/pic13.jpg">
+    <img src="/static/pic14.jpg">
+    <img src="/static/pic15.jpg">
+    <img src="/static/pic16.jpg">
+    <img src="/static/pic17.jpg">
+</div>
+<div id="slideshow" style="display:none;">
+    <img id="slideImage" src="/static/pic1.jpg" 
+    style="width:80%; max-width:400px; border-radius:20px; margin-top:20px;">
+</div>
 
-    <button id="yesBtn" onclick="sayYes()">Yes, always 😌💞</button>
-    <button id="noBtn" onmouseover="runAway()">No 😢</button>
+<button id="yesBtn" onclick="nextQuestion()">Yes 💖</button>
+<button id="noBtn" onmouseover="moveButton()">No 😢</button>
 
-    <div id="loveMessage">
-        You just made my world brighter than this sunlight 🌞💖 <br><br>
-        I don't just want a Valentine… <br>
-        I want you. Always. 🥹❤️
-    </div>
+<div id="finalMessage">
+Jemimma… <br><br>
+I tease you. I act strong. I pretend I don’t feel too much.  
+But truth is… you matter to me more than I show.  
+
+You didn’t just become someone I like.  
+You became someone I feel safe with.  
+
+I don’t want only the cute moments.  
+I want the annoying ones.  
+The silent ones.  
+The hard days too.  
+
+Thank you for existing in my life.  
+I will choose you. Not just today.  
+But every single day I get the chance to.  
+
+Happy Valentine’s Day, my heart. 💖
 </div>
 
 <audio id="bgMusic" loop>
-    <source src="/static/iris.mp3" type="audio/mpeg">
+<source src="/static/iris.mp3" type="audio/mpeg">
 </audio>
 
-<canvas id="confetti"></canvas>
-
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <script>
-    let musicStarted = false;
+let step = 0;
 
-    function sayYes() {
-        document.getElementById("loveMessage").style.display = "block";
+const questions = [
+"Hi cutiepieee… can I ask you something? 🙂‍↕️💗",
+"Can we annoy each other forever and still never get tired? 😌💞",
+"Are you aware that you're illegally cute and distracting my life? 🚨🥹",
+"Do you know how peaceful I feel when you text me? 🌸",
+"If I overthink at 2am… will you still stay? 🥺",
+"Can I be your safe place the way you became mine? 💖",
+"If we fight someday… promise we’ll choose us over ego? 🤍",
+"Do you even realize how much your existence changed me? 🌍",
+"Can I keep choosing you every single day? 💍",
+"Will you be my Valentine? 💘"
+];
 
-        // Start music
-        if (!musicStarted) {
-            document.getElementById("bgMusic").play();
-            musicStarted = true;
+function nextQuestion(){
+    if(step < questions.length-1){
+        step++;
+        document.getElementById("question").innerHTML = questions[step];
+    } else {
+        document.getElementById("finalMessage").style.display="block";
+        document.getElementById("bgMusic").play();
+        heartExplosion();
+    }
+}
+
+function moveButton(){
+    const btn = document.getElementById("noBtn");
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*80+"%";
+    btn.style.top=Math.random()*80+"%";
+}
+
+function heartExplosion(){
+    confetti({
+        particleCount:300,
+        spread:200,
+        origin:{y:0.6}
+    });
+}
+
+function createHearts(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💗";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=Math.random()*20+10+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>{heart.remove();},6000);
+}
+setInterval(createHearts,500);
+let currentSlide = 1;
+
+function startSlideshow() {
+    document.getElementById("collage").style.display = "none";
+    document.getElementById("slideshow").style.display = "block";
+
+    setInterval(() => {
+        currentSlide++;
+        if (currentSlide > 17) {
+            currentSlide = 1;
         }
+        document.getElementById("slideImage").src = "/static/pic" + currentSlide + ".jpg";
+    }, 3000);
+}
 
-        // CONFETTI EXPLOSION 🎉
-        confetti({
-            particleCount: 300,
-            spread: 200,
-            origin: { y: 0.6 }
-        });
-    }
+// Start slideshow after 5 seconds
+setTimeout(startSlideshow, 5000);
 
-    function runAway() {
-        let button = document.getElementById("noBtn");
-        let x = Math.random() * (window.innerWidth - 100);
-        let y = Math.random() * (window.innerHeight - 50);
-        button.style.left = x + "px";
-        button.style.top = y + "px";
-        alert("Nice try Jemimma 😌💖 Only YES works here.");
-    }
 </script>
 
 </body>

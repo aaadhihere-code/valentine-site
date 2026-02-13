@@ -129,6 +129,26 @@ But every single day I get the chance to.
 
 Happy Valentine’s Day, my heart. 💖
 </div>
+    <div id="finalCollage" class="gallery" style="display:none; margin-top:30px;">
+    <img src="/static/pic1.jpg">
+    <img src="/static/pic2.jpg">
+    <img src="/static/pic3.jpg">
+    <img src="/static/pic4.jpg">
+    <img src="/static/pic5.jpg">
+    <img src="/static/pic6.jpg">
+    <img src="/static/pic7.jpg">
+    <img src="/static/pic8.jpg">
+    <img src="/static/pic9.jpg">
+    <img src="/static/pic10.jpg">
+    <img src="/static/pic11.jpg">
+    <img src="/static/pic12.jpg">
+    <img src="/static/pic13.jpg">
+    <img src="/static/pic14.jpg">
+    <img src="/static/pic15.jpg">
+    <img src="/static/pic16.jpg">
+    <img src="/static/pic17.jpg">
+</div>
+
 
 <audio id="bgMusic" loop>
 <source src="/static/iris.mp3" type="audio/mpeg">
@@ -159,10 +179,11 @@ function nextQuestion(){
         step++;
         document.getElementById("question").innerHTML = questions[step];
     } else {
-        document.getElementById("finalMessage").style.display="block";
-        document.getElementById("bgMusic").play();
-        heartExplosion();
-    }
+    document.getElementById("finalMessage").style.display="block";
+    document.getElementById("finalCollage").style.display="grid";
+    heartExplosion();
+  }
+
 }
 
 function moveButton(){
@@ -212,4 +233,5 @@ setTimeout(startSlideshow, 5000);
 
 </body>
 </html>
+
 
